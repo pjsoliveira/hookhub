@@ -29,6 +29,18 @@ if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITH
 const next = {};
 const problems = [];
 
+/**
+ * If nothing changed and the old fetch was in the same month, keep the old
+ * `fetchedAt`. The site only shows the month, so this stays accurate while
+ * a quiet week produces no commit at all instead of a timestamp-only one.
+ */
+function stable(entry, old) {
+  if (!old) return entry;
+  const unchanged = ["stars", "license", "language", "pushedAt", "archived"].every((key) => old[key] === entry[key]);
+  const sameMonth = old.fetchedAt.slice(0, 7) === entry.fetchedAt.slice(0, 7);
+  return unchanged && sameMonth ? { ...entry, fetchedAt: old.fetchedAt } : entry;
+}
+
 /** Keeps the last known data for a repo, if there is any. */
 function keepPrevious(repo) {
   if (previous[repo]) next[repo] = previous[repo];
@@ -72,7 +84,7 @@ for (const { repo } of hooks) {
       archived: Boolean(data.archived),
       fetchedAt: new Date().toISOString(),
     });
-    next[repo] = entry;
+    next[repo] = stable(entry, previous[repo]);
     if (entry.archived) problems.push(`${repo}: archived`);
   } catch (error) {
     // A non-JSON body, a null pushed_at (empty repo), or a value the schema rejects.

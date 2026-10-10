@@ -15,12 +15,17 @@ on:
 permissions:
   contents: write
 
+# A manual run must not race the weekly one on `git push`.
+concurrency:
+  group: refresh-github-meta
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: npm
