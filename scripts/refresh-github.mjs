@@ -3,102 +3,34 @@
 //
 //   node scripts/refresh-github.mjs
 //
+// Needs Node 22.18 or newer (it imports the site's TypeScript schema directly).
 // Set GITHUB_TOKEN to raise the rate limit (60/hour unauthenticated).
 //
-// One bad repo never aborts the run: its last known data is kept and the
-// problem is reported. Every entry is validated against the same schema the
-// site uses before it is written. Exit code 1 means "something needs a look".
-import { readFile, writeFile } from "node:fs/promises";
-import { GithubMetaSchema } from "../src/lib/hooks/schema.ts";
+// One bad repo never aborts the run: its last known data is kept and the problem
+// is reported. Every entry is validated against the same schema the site uses
+// before it is written. Exit code 1 means "something needs a look".
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { loadPrevious, refreshAll, writeAtomic } from "./lib/refresh.mjs";
 
-const REQUEST_TIMEOUT_MS = 15_000;
+const hooksPath = fileURLToPath(new URL("../data/hooks.json", import.meta.url));
+const outPath = fileURLToPath(new URL("../data/github-meta.json", import.meta.url));
 
-const hooks = JSON.parse(await readFile(new URL("../data/hooks.json", import.meta.url), "utf8"));
-const outPath = new URL("../data/github-meta.json", import.meta.url);
+const hooks = JSON.parse(await readFile(hooksPath, "utf8"));
 
-let previous = {};
+let previous;
 try {
-  previous = JSON.parse(await readFile(outPath, "utf8"));
-} catch {
-  // first run
+  previous = await loadPrevious(outPath);
+} catch (error) {
+  // The file exists but can't be used. Stop: continuing would overwrite data we might still recover.
+  console.error(`data/github-meta.json exists but could not be read (${error.message}).`);
+  console.error("Fix it (for example `git checkout data/github-meta.json`) or delete it, then run again.");
+  process.exit(1);
 }
 
-const headers = { Accept: "application/vnd.github+json", "User-Agent": "hookhub-refresh" };
-if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+const { next, problems } = await refreshAll({ hooks, previous, token: process.env.GITHUB_TOKEN });
 
-const next = {};
-const problems = [];
-
-/**
- * If nothing changed and the old fetch was in the same month, keep the old
- * `fetchedAt`. The site only shows the month, so this stays accurate while
- * a quiet week produces no commit at all instead of a timestamp-only one.
- */
-function stable(entry, old) {
-  if (!old) return entry;
-  const unchanged = ["stars", "license", "language", "pushedAt", "archived"].every((key) => old[key] === entry[key]);
-  const sameMonth = old.fetchedAt.slice(0, 7) === entry.fetchedAt.slice(0, 7);
-  return unchanged && sameMonth ? { ...entry, fetchedAt: old.fetchedAt } : entry;
-}
-
-/** Keeps the last known data for a repo, if there is any. */
-function keepPrevious(repo) {
-  if (previous[repo]) next[repo] = previous[repo];
-}
-
-for (const { repo } of hooks) {
-  let response;
-  try {
-    response = await fetch(`https://api.github.com/repos/${repo}`, {
-      headers,
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    });
-  } catch (error) {
-    problems.push(`${repo}: request failed (${error?.name ?? "error"})`);
-    keepPrevious(repo);
-    continue;
-  }
-
-  if (response.status === 403 || response.status === 429) {
-    // Rate limited: asking again only makes it worse. Keep what we have for the rest.
-    problems.push(`${repo}: HTTP ${response.status}, rate limited; stopped early`);
-    for (const rest of hooks) if (!next[rest.repo]) keepPrevious(rest.repo);
-    break;
-  }
-  if (!response.ok) {
-    problems.push(`${repo}: HTTP ${response.status}`);
-    keepPrevious(repo);
-    continue;
-  }
-
-  try {
-    const data = await response.json();
-    // new Date(null) is 1970-01-01, not an error, so check explicitly (empty repos have no pushed_at).
-    if (typeof data.pushed_at !== "string") throw new TypeError("missing pushed_at");
-    const entry = GithubMetaSchema.parse({
-      stars: data.stargazers_count,
-      // null = no license file; "NOASSERTION" = a license file GitHub can't classify.
-      license: data.license?.spdx_id ?? null,
-      language: data.language ?? null,
-      pushedAt: new Date(data.pushed_at).toISOString(),
-      archived: Boolean(data.archived),
-      fetchedAt: new Date().toISOString(),
-    });
-    next[repo] = stable(entry, previous[repo]);
-    if (entry.archived) problems.push(`${repo}: archived`);
-  } catch (error) {
-    // A non-JSON body, a null pushed_at (empty repo), or a value the schema rejects.
-    problems.push(`${repo}: unusable response (${error?.name ?? "error"})`);
-    keepPrevious(repo);
-  }
-}
-
-// Every listed hook must end up with metadata, or the site's checks will fail.
-for (const { repo } of hooks) {
-  if (!next[repo]) problems.push(`${repo}: no metadata (never fetched, nothing to keep)`);
-}
-
-await writeFile(outPath, JSON.stringify(next, null, 2) + "\n");
+await writeAtomic(outPath, JSON.stringify(next, null, 2) + "\n");
 console.log(`Wrote metadata for ${Object.keys(next).length}/${hooks.length} repos`);
 if (problems.length > 0) {
   console.error("Problems:\n  " + problems.join("\n  "));

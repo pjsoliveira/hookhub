@@ -12,7 +12,7 @@ npm test               # vitest: schema, catalog integrity, filter/sort/URL logi
 npx vitest run src/lib/hooks/filter.test.ts   # a single test file
 npm run typecheck && npm run lint
 npm run build          # the real check: Cache Components errors only show up here
-npm run refresh:github # regenerate data/github-meta.json from the GitHub API
+npm run refresh:github # regenerate data/github-meta.json from the GitHub API (Node 22.18+: it imports the TypeScript schema)
 ```
 
 ## Architecture
@@ -23,6 +23,7 @@ A static catalog site. All data is JSON in `data/`, validated at build time by `
 - `src/components/HookBrowser.tsx` is the only client component. Its React state is the source of truth; the URL mirrors it (debounced `history.replaceState`) and is adopted back when it changes from outside. It reads `useSearchParams`, so the home page renders it inside `<Suspense>`. Components must not import `@/lib/hooks/load` (it would ship the whole catalog to the browser); pass data in as props.
 - Component tests live next to the component (`*.test.tsx`) and opt into jsdom with `// @vitest-environment jsdom`; `next/navigation` is mocked there.
 - `src/app/hooks/[slug]/page.tsx` is statically generated from `hooks.json`.
+- `scripts/refresh-github.mjs` is a thin wrapper; the logic (rate-limit handling, atomic write, validation) is in `scripts/lib/refresh.mjs` and is covered by `scripts/lib/refresh.test.mjs`. A missing `github-meta.json` is a normal first run, but a corrupt one stops the run on purpose.
 
 ## Rules for the catalog
 

@@ -14,7 +14,7 @@ npm run dev        # http://localhost:3000
 | `npm test` | unit tests (schema, catalog integrity, filtering) |
 | `npm run typecheck` / `npm run lint` | type-check / eslint |
 | `npm run build` | production build (also validates the catalog) |
-| `npm run refresh:github` | refresh `data/github-meta.json` (set `GITHUB_TOKEN` for a higher rate limit) |
+| `npm run refresh:github` | refresh `data/github-meta.json` (needs Node 22.18+; set `GITHUB_TOKEN` for a higher rate limit) |
 
 ## How it works
 
