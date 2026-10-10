@@ -1,7 +1,12 @@
 name: Refresh GitHub metadata
 
-# Weekly: update stars, license and last push for every listed hook, and fail
-# if a repository disappeared or was archived so someone looks at it.
+# Weekly: update stars, license and last push for every listed hook.
+#
+# Order matters. A push made with the built-in GITHUB_TOKEN does not trigger
+# the CI workflow, so this job validates the new data itself (tests + build)
+# BEFORE committing it. If the refresh reports a problem (a repository was
+# archived, disappeared, or the API was rate limited), good data is still
+# committed, and the job then fails so someone looks at it.
 on:
   schedule:
     - cron: "0 6 * * 1"
@@ -18,12 +23,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
+      # The refresh script validates entries with the site's own zod schema.
+      - run: npm ci
+
       - name: Refresh data/github-meta.json
+        id: refresh
+        continue-on-error: true
         run: node scripts/refresh-github.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate the new data before committing it
+        run: |
+          npm test
+          npm run build
+
       - name: Commit changes
-        if: always()
         run: |
           if [ -n "$(git status --porcelain data/github-meta.json)" ]; then
             git config user.name "github-actions[bot]"
@@ -32,3 +48,9 @@ jobs:
             git commit -m "Refresh GitHub metadata"
             git push
           fi
+
+      - name: Fail if the refresh reported problems
+        if: steps.refresh.outcome == 'failure'
+        run: |
+          echo "::error::The refresh reported problems (archived or missing repos, rate limit). See the 'Refresh data/github-meta.json' step."
+          exit 1
