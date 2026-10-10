@@ -6,6 +6,7 @@ import {
   buildQuery,
   eventCounts,
   filterHooks,
+  MAX_QUERY_LENGTH,
   parseFilters,
   SORT_KEYS,
   sortHooks,
@@ -81,7 +82,7 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
             ref={inputRef}
             type="search"
             value={filters.q}
-            maxLength={100}
+            maxLength={MAX_QUERY_LENGTH}
             onChange={(e) => {
               const q = e.target.value;
               setFilters((current) => ({ ...current, q }));

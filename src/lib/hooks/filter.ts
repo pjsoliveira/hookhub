@@ -3,6 +3,9 @@ import type { GithubMeta, Hook } from "./schema";
 export type SortKey = "stars" | "updated" | "newest" | "name";
 export const SORT_KEYS: SortKey[] = ["stars", "updated", "newest", "name"];
 
+/** The longest search text we accept, in the box, in the URL and when parsing. */
+export const MAX_QUERY_LENGTH = 100;
+
 export type MetaByRepo = Record<string, GithubMeta | undefined>;
 
 export type Filters = {
@@ -16,7 +19,10 @@ export function filterHooks(hooks: Hook[], { events, q }: Filters): Hook[] {
   return hooks.filter((hook) => {
     if (events.length > 0 && !events.some((event) => hook.events.includes(event))) return false;
     if (!needle) return true;
-    const haystack = [hook.name, hook.description, ...(hook.tags ?? [])].join(" ").toLowerCase();
+    // Event names and the repo are searchable too, so "PreToolUse" or "disler" find things.
+    const haystack = [hook.name, hook.description, hook.repo, ...hook.events, ...(hook.tags ?? [])]
+      .join(" ")
+      .toLowerCase();
     return haystack.includes(needle);
   });
 }
@@ -45,16 +51,16 @@ export function eventCounts(hooks: Hook[]): Record<string, number> {
 export function parseFilters(params: URLSearchParams, knownEvents: string[]) {
   const known = new Set(knownEvents);
   const events = [...new Set(params.getAll("event"))].filter((e) => known.has(e));
-  const q = (params.get("q") ?? "").slice(0, 100);
-  const sortParam = params.get("sort") as SortKey | null;
-  const sort: SortKey = sortParam && SORT_KEYS.includes(sortParam) ? sortParam : "stars";
+  const q = (params.get("q") ?? "").slice(0, MAX_QUERY_LENGTH);
+  // find() returns one of our own constants, so no cast is needed.
+  const sort = SORT_KEYS.find((key) => key === params.get("sort")) ?? "stars";
   return { events, q, sort };
 }
 
 export function buildQuery({ events, q, sort }: { events: string[]; q: string; sort: SortKey }) {
   const params = new URLSearchParams();
   for (const event of events) params.append("event", event);
-  if (q.trim()) params.set("q", q.trim());
+  if (q.trim()) params.set("q", q.trim().slice(0, MAX_QUERY_LENGTH));
   if (sort !== "stars") params.set("sort", sort);
   return params.toString();
 }

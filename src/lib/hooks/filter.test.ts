@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { buildQuery, eventCounts, filterHooks, parseFilters, sortHooks, type MetaByRepo } from "./filter";
+import {
+  buildQuery,
+  eventCounts,
+  filterHooks,
+  MAX_QUERY_LENGTH,
+  parseFilters,
+  sortHooks,
+  type MetaByRepo,
+} from "./filter";
 import type { Hook } from "./schema";
 
 const make = (slug: string, events: string[], extra: Partial<Hook> = {}): Hook => ({
@@ -53,6 +61,17 @@ describe("filterHooks", () => {
   });
 });
 
+describe("search covers event names and repos", () => {
+  it("finds a hook by one of its events, not just its text", () => {
+    expect(filterHooks(all, { events: [], q: "pretooluse" }).map((h) => h.slug)).toEqual(["bravo"]);
+    expect(filterHooks(all, { events: [], q: "SessionStart" }).map((h) => h.slug)).toEqual(["charlie"]);
+  });
+
+  it("finds a hook by its repository", () => {
+    expect(filterHooks(all, { events: [], q: "o/charlie" }).map((h) => h.slug)).toEqual(["charlie"]);
+  });
+});
+
 describe("sortHooks", () => {
   it("sorts by stars, with hooks that have no metadata last", () => {
     expect(sortHooks(all, metaByRepo, "stars").map((h) => h.slug)).toEqual(["bravo", "alpha", "charlie"]);
@@ -89,5 +108,39 @@ describe("URL state", () => {
     const state = { events: ["Stop", "PreToolUse"], q: "format", sort: "updated" as const };
     expect(parseFilters(new URLSearchParams(buildQuery(state)), known)).toEqual(state);
     expect(buildQuery({ events: [], q: "", sort: "stars" })).toBe("");
+  });
+
+  it("caps the search text at the same length in and out of the URL", () => {
+    const long = "x".repeat(150);
+    expect(parseFilters(new URLSearchParams({ q: long }), known).q).toHaveLength(MAX_QUERY_LENGTH);
+    const query = buildQuery({ events: [], q: long, sort: "stars" });
+    expect(new URLSearchParams(query).get("q")).toHaveLength(MAX_QUERY_LENGTH);
+  });
+
+  it("falls back to the default sort for unknown or hostile values", () => {
+    for (const bad of ["", "nope", "__proto__", "constructor", "STARS"]) {
+      expect(parseFilters(new URLSearchParams({ sort: bad }), known).sort, bad).toBe("stars");
+    }
+  });
+
+  it("ignores empty and unknown event values", () => {
+    expect(parseFilters(new URLSearchParams("event=&event=Bogus&event=Stop"), known).events).toEqual(["Stop"]);
+  });
+
+  it("encodes special characters and trims the text", () => {
+    const state = { events: [], q: "  a&b=c#d é  ", sort: "stars" as const };
+    const query = buildQuery(state);
+    expect(query).not.toMatch(/[#&]d/);
+    expect(parseFilters(new URLSearchParams(query), known).q).toBe("a&b=c#d é");
+  });
+});
+
+describe("sortHooks edge cases", () => {
+  it("puts hooks without metadata last when sorting by last push, and ties by name", () => {
+    const x = make("x", ["Stop"]);
+    const y = make("y", ["Stop"]);
+    const z = make("z", ["Stop"]);
+    const m: MetaByRepo = { "o/x": meta(1, "2026-05-01T00:00:00.000Z"), "o/y": meta(1, "2026-05-01T00:00:00.000Z") };
+    expect(sortHooks([z, y, x], m, "updated").map((h) => h.slug)).toEqual(["x", "y", "z"]);
   });
 });
