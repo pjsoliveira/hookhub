@@ -33,12 +33,10 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
   // This state is the single source of truth. The URL is only a mirror of it
   // (written below), so a click can never be computed from a stale URL.
   // It starts from the URL, which is what makes shared links work.
-  const [filters, setFilters] = useState(() =>
-    parseFilters(
-      params,
-      events.map((e) => e.name),
-    ),
-  );
+  const eventNames = events.map((e) => e.name);
+  const [filters, setFilters] = useState(() => parseFilters(params, eventNames));
+  // The query string this component last wrote (or last adopted) for itself.
+  const lastQuery = useRef(buildQuery(filters));
 
   // Mirror the state into the address bar with the native History API, which Next
   // keeps in sync with useSearchParams. Debounced, so typing doesn't write the
@@ -46,10 +44,24 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
   useEffect(() => {
     const timer = setTimeout(() => {
       const query = buildQuery(filters);
+      lastQuery.current = query;
       window.history.replaceState(null, "", query ? `${pathname}?${query}` : pathname);
     }, 250);
     return () => clearTimeout(timer);
   }, [filters, pathname]);
+
+  // The other direction: if the URL changes from outside (a link to /?event=Stop
+  // while this page is open), adopt it. Our own writes arrive here equal to
+  // `lastQuery`, so they are ignored.
+  useEffect(() => {
+    const incoming = parseFilters(params, eventNames);
+    const query = buildQuery(incoming);
+    if (query === lastQuery.current) return;
+    lastQuery.current = query;
+    setFilters(incoming);
+    // eventNames is derived from `events` on every render; `params` is what changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
 
   // Functional updates always start from the latest state, so two quick clicks both count.
   function toggle(event: string) {
@@ -124,13 +136,15 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
                   aria-pressed={on}
                   title={event.description}
                   onClick={() => toggle(event.name)}
-                  className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+                  className={`rounded-full border px-3 py-1.5 text-sm transition-colors sm:py-1 ${
                     on
                       ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
                       : "border-zinc-300 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
                   }`}
                 >
                   {event.name} <span className={on ? "opacity-80" : "text-zinc-500"}>{counts[event.name] ?? 0}</span>
+                  {/* `title` doesn't work on touch screens or for keyboard and screen-reader users. */}
+                  <span className="sr-only">. {event.description}</span>
                 </button>
               );
             })}
