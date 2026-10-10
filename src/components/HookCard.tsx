@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { repoUrl } from "@/lib/hooks/format";
+import { licenseLabel, repoUrl } from "@/lib/hooks/format";
 import type { GithubMeta, Hook } from "@/lib/hooks/schema";
 
 const MAX_EVENT_BADGES = 4;
@@ -103,7 +103,7 @@ export function HookCard({
               {meta.stars.toLocaleString("en-US")}
               <span className="sr-only"> stars</span>
             </span>
-            <span>{meta.license ?? "No license"}</span>
+            <span>{licenseLabel(meta.license)}</span>
             <span>Updated {formatMonth(meta.pushedAt)}</span>
           </p>
         ) : (

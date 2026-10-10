@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge, formatMonth } from "@/components/HookCard";
+import { licenseLabel } from "@/lib/hooks/format";
 import { events, getHook, githubMeta, hooks, repoUrl } from "@/lib/hooks/load";
 
 export function generateStaticParams() {
@@ -50,7 +51,7 @@ export default async function HookPage({ params }: PageProps<"/hooks/[slug]">) {
         </p>
         {meta && (
           <p className="text-sm text-zinc-500">
-            ★ {meta.stars.toLocaleString("en-US")} · {meta.license ?? "No license"}
+            ★ {meta.stars.toLocaleString("en-US")} · {licenseLabel(meta.license)}
             {meta.language ? ` · ${meta.language}` : ""} · Updated {formatMonth(meta.pushedAt)}
           </p>
         )}

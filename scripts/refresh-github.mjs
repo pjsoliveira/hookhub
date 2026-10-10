@@ -32,7 +32,8 @@ for (const { repo } of hooks) {
   const data = await response.json();
   next[repo] = {
     stars: data.stargazers_count,
-    license: data.license?.spdx_id && data.license.spdx_id !== "NOASSERTION" ? data.license.spdx_id : null,
+    // null = no license file; "NOASSERTION" = a license file GitHub can't classify.
+    license: data.license?.spdx_id ?? null,
     language: data.language ?? null,
     pushedAt: new Date(data.pushed_at).toISOString(),
     archived: Boolean(data.archived),
