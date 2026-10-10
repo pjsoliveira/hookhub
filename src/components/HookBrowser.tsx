@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import {
   buildQuery,
   eventCounts,
@@ -22,24 +22,42 @@ const SORT_LABELS: Record<SortKey, string> = {
   name: "Name",
 };
 
+const DEFAULT_FILTERS = { events: [] as string[], q: "", sort: "stars" as SortKey };
+
 export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: HookEvent[]; meta: MetaByRepo }) {
-  const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
-  const filters = parseFilters(params, events.map((e) => e.name));
-  // The text box keeps its own state so typing never waits on the URL.
-  const [text, setText] = useState(filters.q);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  function update(next: Partial<{ events: string[]; q: string; sort: SortKey }>) {
-    const query = buildQuery({ events: filters.events, q: text, sort: filters.sort, ...next });
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
-  }
+  // This state is the single source of truth. The URL is only a mirror of it
+  // (written below), so a click can never be computed from a stale URL.
+  // It starts from the URL, which is what makes shared links work.
+  const [filters, setFilters] = useState(() =>
+    parseFilters(
+      params,
+      events.map((e) => e.name),
+    ),
+  );
 
+  // Mirror the state into the address bar with the native History API, which Next
+  // keeps in sync with useSearchParams. Debounced, so typing doesn't write the
+  // URL on every keystroke. No navigation happens and no history entry is added.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const query = buildQuery(filters);
+      window.history.replaceState(null, "", query ? `${pathname}?${query}` : pathname);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [filters, pathname]);
+
+  // Functional updates always start from the latest state, so two quick clicks both count.
   function toggle(event: string) {
-    const selected = filters.events.includes(event)
-      ? filters.events.filter((e) => e !== event)
-      : [...filters.events, event];
-    update({ events: selected });
+    setFilters((current) => ({
+      ...current,
+      events: current.events.includes(event)
+        ? current.events.filter((e) => e !== event)
+        : [...current.events, event],
+    }));
   }
 
   const groupOf = Object.fromEntries(events.map((event) => [event.name, event.group]));
@@ -51,8 +69,8 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
     groups.set(event.group, [...(groups.get(event.group) ?? []), event]);
   }
 
-  const visible = sortHooks(filterHooks(hooks, { events: filters.events, q: text }), meta, filters.sort);
-  const filtered = filters.events.length > 0 || text.trim() !== "";
+  const visible = sortHooks(filterHooks(hooks, { events: filters.events, q: filters.q }), meta, filters.sort);
+  const filtered = filters.events.length > 0 || filters.q.trim() !== "";
 
   return (
     <div className="flex flex-col gap-6">
@@ -60,11 +78,13 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
         <label className="flex-1">
           <span className="sr-only">Search hooks</span>
           <input
+            ref={inputRef}
             type="search"
-            value={text}
+            value={filters.q}
+            maxLength={100}
             onChange={(e) => {
-              setText(e.target.value);
-              update({ q: e.target.value });
+              const q = e.target.value;
+              setFilters((current) => ({ ...current, q }));
             }}
             placeholder="Search hooks"
             className="w-full rounded-md border border-zinc-300 bg-transparent p-2 dark:border-zinc-700"
@@ -74,7 +94,10 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
           <span className="text-zinc-500">Sort</span>
           <select
             value={filters.sort}
-            onChange={(e) => update({ sort: e.target.value as SortKey })}
+            onChange={(e) => {
+              const sort = e.target.value as SortKey;
+              setFilters((current) => ({ ...current, sort }));
+            }}
             className="rounded-md border border-zinc-300 bg-transparent p-2 dark:border-zinc-700"
           >
             {SORT_KEYS.map((key) => (
@@ -122,8 +145,10 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
           <button
             type="button"
             onClick={() => {
-              setText("");
-              router.replace(pathname, { scroll: false });
+              setFilters(DEFAULT_FILTERS);
+              // This button disappears once the filters are clear; without this,
+              // keyboard focus would fall back to the top of the page.
+              inputRef.current?.focus();
             }}
             className="underline underline-offset-4"
           >
