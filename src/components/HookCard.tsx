@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { events, repoUrl } from "@/lib/hooks/load";
+import { repoUrl } from "@/lib/hooks/format";
 import type { GithubMeta, Hook } from "@/lib/hooks/schema";
 
 const MAX_EVENT_BADGES = 4;
@@ -31,18 +31,26 @@ const GROUP_TONES: Record<string, string> = {
 };
 const FALLBACK_TONE = "bg-zinc-100 text-zinc-700 ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700";
 
-const groupOf = new Map(events.map((event) => [event.name, event.group]));
-
 const INSTALL_LABELS = { plugin: "Plugin", settings: "Settings", script: "Script" } as const;
 
-function EventBadge({ name }: { name: string }) {
-  const tone = GROUP_TONES[groupOf.get(name) ?? ""] ?? FALLBACK_TONE;
+function EventBadge({ name, group }: { name: string; group?: string }) {
+  const tone = GROUP_TONES[group ?? ""] ?? FALLBACK_TONE;
   return (
     <span className={`rounded-md px-2 py-0.5 font-mono text-xs ring-1 ring-inset ${tone}`}>{name}</span>
   );
 }
 
-export function HookCard({ hook, meta }: { hook: Hook; meta?: GithubMeta }) {
+// `groupOf` maps an event name to its group. It is passed in (not imported) so
+// this component never pulls the catalog data into the client bundle.
+export function HookCard({
+  hook,
+  meta,
+  groupOf,
+}: {
+  hook: Hook;
+  meta?: GithubMeta;
+  groupOf: Record<string, string>;
+}) {
   const shown = hook.events.slice(0, MAX_EVENT_BADGES);
   const hidden = hook.events.length - shown.length;
 
@@ -75,7 +83,7 @@ export function HookCard({ hook, meta }: { hook: Hook; meta?: GithubMeta }) {
       <ul className="flex flex-wrap gap-1.5" aria-label="Events">
         {shown.map((event) => (
           <li key={event}>
-            <EventBadge name={event} />
+            <EventBadge name={event} group={groupOf[event]} />
           </li>
         ))}
         {hidden > 0 && (

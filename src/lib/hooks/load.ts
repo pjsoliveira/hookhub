@@ -18,6 +18,4 @@ export function getHook(slug: string) {
   return hooks.find((hook) => hook.slug === slug);
 }
 
-export function repoUrl(repo: string) {
-  return `https://github.com/${repo}`;
-}
+export { repoUrl } from "./format";

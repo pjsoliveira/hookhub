@@ -42,6 +42,7 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
     update({ events: selected });
   }
 
+  const groupOf = Object.fromEntries(events.map((event) => [event.name, event.group]));
   const counts = eventCounts(hooks);
   // Only offer events that at least one hook handles (plus any already selected).
   const groups = new Map<string, HookEvent[]>();
@@ -138,7 +139,7 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((hook) => (
-            <HookCard key={hook.slug} hook={hook} meta={meta[hook.repo]} />
+            <HookCard key={hook.slug} hook={hook} meta={meta[hook.repo]} groupOf={groupOf} />
           ))}
         </div>
       )}
