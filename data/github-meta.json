@@ -1,0 +1,74 @@
+{
+  "severity1/claude-code-prompt-improver": {
+    "stars": 1944,
+    "license": "MIT",
+    "language": "Python",
+    "pushedAt": "2026-10-01T04:27:45.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:30:58.967Z"
+  },
+  "disler/claude-code-hooks-mastery": {
+    "stars": 3934,
+    "license": null,
+    "language": "Python",
+    "pushedAt": "2026-03-04T18:16:25.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:30:59.336Z"
+  },
+  "disler/claude-code-hooks-multi-agent-observability": {
+    "stars": 1545,
+    "license": null,
+    "language": "Python",
+    "pushedAt": "2026-02-08T23:59:13.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:30:59.644Z"
+  },
+  "shanraisshan/claude-code-hooks": {
+    "stars": 554,
+    "license": "MIT",
+    "language": "HTML",
+    "pushedAt": "2026-06-04T18:35:14.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:30:59.913Z"
+  },
+  "backthread/add-reasoning-to-prs": {
+    "stars": 35,
+    "license": "MIT",
+    "language": "TypeScript",
+    "pushedAt": "2026-10-08T01:33:59.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:31:00.258Z"
+  },
+  "ymonster/claude_encoding_guard": {
+    "stars": 16,
+    "license": "MIT",
+    "language": "Python",
+    "pushedAt": "2026-08-03T13:39:45.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:31:00.563Z"
+  },
+  "RainSunMe/cc-vision-hook": {
+    "stars": 11,
+    "license": "MIT",
+    "language": "TypeScript",
+    "pushedAt": "2026-07-09T06:24:53.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:31:00.873Z"
+  },
+  "angelinekeke/claude-awake-speak": {
+    "stars": 5,
+    "license": "MIT",
+    "language": "Python",
+    "pushedAt": "2026-03-24T13:56:06.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:31:01.146Z"
+  },
+  "coleam00/claude-memory-compiler": {
+    "stars": 1299,
+    "license": null,
+    "language": "Python",
+    "pushedAt": "2026-04-06T19:46:57.000Z",
+    "archived": false,
+    "fetchedAt": "2026-10-10T07:31:01.482Z"
+  }
+}

@@ -1,0 +1,198 @@
+[
+  {
+    "slug": "prompt-improver",
+    "name": "Claude Code Prompt Improver",
+    "description": "Injects the right context at prompt submit, tool use and subagent start, so Claude has what it needs before it acts.",
+    "repo": "severity1/claude-code-prompt-improver",
+    "events": [
+      "UserPromptSubmit",
+      "PreToolUse",
+      "SubagentStart"
+    ],
+    "install": "plugin",
+    "tags": [
+      "prompts",
+      "context"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "hooks-mastery",
+    "name": "Claude Code Hooks Mastery",
+    "description": "A teaching repo with working examples of deterministic control over Claude Code across the hook lifecycle, plus sub-agents.",
+    "repo": "disler/claude-code-hooks-mastery",
+    "events": [
+      "SessionStart",
+      "Setup",
+      "UserPromptSubmit",
+      "PreToolUse",
+      "PermissionRequest",
+      "PostToolUse",
+      "PostToolUseFailure",
+      "Notification",
+      "SubagentStart",
+      "SubagentStop",
+      "Stop",
+      "PreCompact",
+      "SessionEnd"
+    ],
+    "install": "settings",
+    "tags": [
+      "examples",
+      "learning"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "multi-agent-observability",
+    "name": "Multi-Agent Observability",
+    "description": "Real-time monitoring and visualization of Claude Code agents by sending every hook event to a dashboard.",
+    "repo": "disler/claude-code-hooks-multi-agent-observability",
+    "events": [
+      "SessionStart",
+      "UserPromptSubmit",
+      "PreToolUse",
+      "PermissionRequest",
+      "PostToolUse",
+      "PostToolUseFailure",
+      "Notification",
+      "SubagentStart",
+      "SubagentStop",
+      "Stop",
+      "PreCompact",
+      "SessionEnd"
+    ],
+    "install": "settings",
+    "tags": [
+      "observability",
+      "monitoring"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "hooks-voice-demo",
+    "name": "Claude Code Hooks (voice demo)",
+    "description": "Adds voice feedback to hook events, and registers nearly every event, which makes it a handy reference for what fires when.",
+    "repo": "shanraisshan/claude-code-hooks",
+    "events": [
+      "SessionStart",
+      "Setup",
+      "UserPromptSubmit",
+      "UserPromptExpansion",
+      "PreToolUse",
+      "PermissionRequest",
+      "PermissionDenied",
+      "PostToolUse",
+      "PostToolUseFailure",
+      "PostToolBatch",
+      "Notification",
+      "MessageDisplay",
+      "SubagentStart",
+      "SubagentStop",
+      "TaskCreated",
+      "TaskCompleted",
+      "Stop",
+      "StopFailure",
+      "TeammateIdle",
+      "InstructionsLoaded",
+      "ConfigChange",
+      "CwdChanged",
+      "FileChanged",
+      "WorktreeCreate",
+      "WorktreeRemove",
+      "PreCompact",
+      "PostCompact",
+      "Elicitation",
+      "ElicitationResult",
+      "SessionEnd"
+    ],
+    "install": "settings",
+    "tags": [
+      "voice",
+      "reference"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "add-reasoning-to-prs",
+    "name": "Add Reasoning to PRs",
+    "description": "Before an agent opens a pull request, makes it write the why: decisions, trade-offs, assumptions and limitations.",
+    "repo": "backthread/add-reasoning-to-prs",
+    "events": [
+      "PreToolUse"
+    ],
+    "install": "plugin",
+    "tags": [
+      "git",
+      "pull-requests"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "encoding-guard",
+    "name": "Claude Encoding Guard",
+    "description": "Preserves non-UTF-8 file encodings and line endings when Claude Code edits your files.",
+    "repo": "ymonster/claude_encoding_guard",
+    "events": [
+      "SessionStart",
+      "PreToolUse",
+      "PostToolUse",
+      "Stop",
+      "SessionEnd"
+    ],
+    "install": "plugin",
+    "tags": [
+      "files",
+      "encoding"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "vision-hook",
+    "name": "cc-vision-hook",
+    "description": "Gives vision-blind models a text description of pasted images and screenshots, without touching your prompt.",
+    "repo": "RainSunMe/cc-vision-hook",
+    "events": [
+      "UserPromptSubmit",
+      "PostToolUse"
+    ],
+    "install": "script",
+    "tags": [
+      "images",
+      "vision"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "awake-speak",
+    "name": "claude-awake-speak",
+    "description": "Reads Claude's Chinese replies aloud with Edge TTS after each response, without using extra tokens.",
+    "repo": "angelinekeke/claude-awake-speak",
+    "events": [
+      "Stop"
+    ],
+    "install": "settings",
+    "tags": [
+      "voice",
+      "tts"
+    ],
+    "addedAt": "2026-10-10"
+  },
+  {
+    "slug": "memory-compiler",
+    "name": "Claude Memory Compiler",
+    "description": "Captures your sessions and compiles them into a searchable personal knowledge base.",
+    "repo": "coleam00/claude-memory-compiler",
+    "events": [
+      "SessionStart",
+      "PreCompact",
+      "SessionEnd"
+    ],
+    "install": "settings",
+    "tags": [
+      "memory",
+      "knowledge-base"
+    ],
+    "addedAt": "2026-10-10"
+  }
+]

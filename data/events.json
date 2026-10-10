@@ -1,0 +1,200 @@
+[
+  {
+    "name": "SessionStart",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "Session begins or resumes"
+  },
+  {
+    "name": "Setup",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "Run with --init-only, or --init/--maintenance with -p"
+  },
+  {
+    "name": "SessionEnd",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "Session terminates"
+  },
+  {
+    "name": "InstructionsLoaded",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "CLAUDE.md or a rules file is loaded"
+  },
+  {
+    "name": "ConfigChange",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "A config file changes mid-session"
+  },
+  {
+    "name": "CwdChanged",
+    "group": "Session",
+    "supportsMatcher": false,
+    "description": "Working directory changes"
+  },
+  {
+    "name": "DirectoryAdded",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "A directory is added with /add-dir"
+  },
+  {
+    "name": "FileChanged",
+    "group": "Session",
+    "supportsMatcher": true,
+    "description": "A watched file changes on disk"
+  },
+  {
+    "name": "UserPromptSubmit",
+    "group": "Prompt",
+    "supportsMatcher": false,
+    "description": "A prompt is submitted, before it is processed"
+  },
+  {
+    "name": "UserPromptExpansion",
+    "group": "Prompt",
+    "supportsMatcher": true,
+    "description": "A typed command expands into a prompt"
+  },
+  {
+    "name": "MessageDisplay",
+    "group": "Prompt",
+    "supportsMatcher": false,
+    "description": "Assistant message text is displayed"
+  },
+  {
+    "name": "PreToolUse",
+    "group": "Tools",
+    "supportsMatcher": true,
+    "description": "Before a tool call runs"
+  },
+  {
+    "name": "PermissionRequest",
+    "group": "Tools",
+    "supportsMatcher": true,
+    "description": "A tool call needs a permission decision"
+  },
+  {
+    "name": "PermissionDenied",
+    "group": "Tools",
+    "supportsMatcher": true,
+    "description": "Auto mode denies a tool call"
+  },
+  {
+    "name": "PostToolUse",
+    "group": "Tools",
+    "supportsMatcher": true,
+    "description": "After a tool call succeeds"
+  },
+  {
+    "name": "PostToolUseFailure",
+    "group": "Tools",
+    "supportsMatcher": true,
+    "description": "After a tool call fails"
+  },
+  {
+    "name": "PostToolBatch",
+    "group": "Tools",
+    "supportsMatcher": false,
+    "description": "After a batch of parallel tool calls resolves"
+  },
+  {
+    "name": "SubagentStart",
+    "group": "Agents & tasks",
+    "supportsMatcher": true,
+    "description": "A subagent is spawned"
+  },
+  {
+    "name": "SubagentStop",
+    "group": "Agents & tasks",
+    "supportsMatcher": true,
+    "description": "A subagent finishes"
+  },
+  {
+    "name": "TaskCreated",
+    "group": "Agents & tasks",
+    "supportsMatcher": false,
+    "description": "A task is created"
+  },
+  {
+    "name": "TaskCompleted",
+    "group": "Agents & tasks",
+    "supportsMatcher": false,
+    "description": "A task is marked completed"
+  },
+  {
+    "name": "TeammateIdle",
+    "group": "Agents & tasks",
+    "supportsMatcher": false,
+    "description": "An agent-team teammate is about to go idle"
+  },
+  {
+    "name": "Stop",
+    "group": "Turn end",
+    "supportsMatcher": false,
+    "description": "Claude finishes responding"
+  },
+  {
+    "name": "StopFailure",
+    "group": "Turn end",
+    "supportsMatcher": true,
+    "description": "The turn ends on an API error"
+  },
+  {
+    "name": "Notification",
+    "group": "Turn end",
+    "supportsMatcher": true,
+    "description": "Claude Code sends a notification"
+  },
+  {
+    "name": "PreCompact",
+    "group": "Context & model",
+    "supportsMatcher": true,
+    "description": "Before context compaction"
+  },
+  {
+    "name": "PostCompact",
+    "group": "Context & model",
+    "supportsMatcher": true,
+    "description": "After context compaction"
+  },
+  {
+    "name": "PreModelSwitch",
+    "group": "Context & model",
+    "supportsMatcher": true,
+    "description": "Before a model switch"
+  },
+  {
+    "name": "PostModelSwitch",
+    "group": "Context & model",
+    "supportsMatcher": true,
+    "description": "After the session's model changes"
+  },
+  {
+    "name": "WorktreeCreate",
+    "group": "Worktrees",
+    "supportsMatcher": false,
+    "description": "A worktree is being created"
+  },
+  {
+    "name": "WorktreeRemove",
+    "group": "Worktrees",
+    "supportsMatcher": false,
+    "description": "A hook-created worktree is removed"
+  },
+  {
+    "name": "Elicitation",
+    "group": "MCP",
+    "supportsMatcher": true,
+    "description": "An MCP server asks the user for input"
+  },
+  {
+    "name": "ElicitationResult",
+    "group": "MCP",
+    "supportsMatcher": true,
+    "description": "After the user responds to an elicitation"
+  }
+]
