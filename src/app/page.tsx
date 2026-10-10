@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Hero } from "@/components/Hero";
+import { Hero } from "@/components/hero/Hero";
 import { HookBrowser } from "@/components/HookBrowser";
 import { events, githubMeta, hooks } from "@/lib/hooks/load";
 
