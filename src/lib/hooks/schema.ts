@@ -14,12 +14,21 @@ export const HookSchema = z.object({
   name: z.string().min(1).max(80),
   description: z.string().min(1).max(200),
   // owner/name only, so every link goes to https://github.com/{repo}
-  repo: z.string().regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/name"),
-  events: z.array(z.string()).min(1),
-  matchers: z.array(z.string()).optional(),
+  repo: z
+    .string()
+    .regex(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/, "owner/name")
+    .refine((repo) => repo.split("/").every((part) => part !== "." && part !== ".."), "no . or .. segments"),
+  events: z
+    .array(z.string())
+    .min(1)
+    .max(40)
+    .refine((list) => new Set(list).size === list.length, "events must be unique"),
   install: z.enum(["plugin", "settings", "script"]),
-  tags: z.array(z.string()).optional(),
+  tags: z.array(z.string().min(1).max(30)).max(10).optional(),
   addedAt: z.iso.date(),
+  // The day someone last checked `events` against the repo's real hook config.
+  // Repos change, so the list is a dated snapshot, and the site says so.
+  verifiedAt: z.iso.date(),
 });
 export type Hook = z.infer<typeof HookSchema>;
 
@@ -41,7 +50,11 @@ export function parseCatalog(rawEvents: unknown, rawHooks: unknown) {
   const events = z.array(EventSchema).parse(rawEvents);
   const hooks = z.array(HookSchema).parse(rawHooks);
 
-  const known = new Set(events.map((e) => e.name));
+  const known = new Set<string>();
+  for (const event of events) {
+    if (known.has(event.name)) throw new Error(`Duplicate event name: ${event.name}`);
+    known.add(event.name);
+  }
   const slugs = new Set<string>();
   const repos = new Set<string>();
   for (const hook of hooks) {
@@ -54,4 +67,18 @@ export function parseCatalog(rawEvents: unknown, rawHooks: unknown) {
     }
   }
   return { events, hooks };
+}
+
+/**
+ * Every hook needs GitHub metadata, and metadata for a hook that no longer
+ * exists is leftover data. Both fail the build so the two files can't drift.
+ */
+export function checkMeta(hooks: Hook[], meta: Record<string, unknown>) {
+  const repos = new Set(hooks.map((hook) => hook.repo));
+  for (const repo of repos) {
+    if (!(repo in meta)) throw new Error(`No GitHub metadata for ${repo}. Run: npm run refresh:github`);
+  }
+  for (const key of Object.keys(meta)) {
+    if (!repos.has(key)) throw new Error(`github-meta.json has an entry for ${key}, which is not in hooks.json`);
+  }
 }

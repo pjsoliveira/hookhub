@@ -133,19 +133,19 @@
   },
   {
     "name": "Stop",
-    "group": "Turn end",
+    "group": "Turn end & alerts",
     "supportsMatcher": false,
     "description": "Claude finishes responding"
   },
   {
     "name": "StopFailure",
-    "group": "Turn end",
+    "group": "Turn end & alerts",
     "supportsMatcher": true,
     "description": "The turn ends on an API error"
   },
   {
     "name": "Notification",
-    "group": "Turn end",
+    "group": "Turn end & alerts",
     "supportsMatcher": true,
     "description": "Claude Code sends a notification"
   },

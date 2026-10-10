@@ -1,7 +1,7 @@
 import eventsJson from "../../../data/events.json";
 import hooksJson from "../../../data/hooks.json";
 import metaJson from "../../../data/github-meta.json";
-import { GithubMetaSchema, parseCatalog } from "./schema";
+import { checkMeta, GithubMetaSchema, parseCatalog } from "./schema";
 import type { MetaByRepo } from "./filter";
 import { z } from "zod";
 
@@ -9,6 +9,7 @@ import { z } from "zod";
 // shipping a broken card.
 const catalog = parseCatalog(eventsJson, hooksJson);
 const meta: MetaByRepo = z.record(z.string(), GithubMetaSchema).parse(metaJson);
+checkMeta(catalog.hooks, meta);
 
 export const events = catalog.events;
 export const hooks = catalog.hooks;

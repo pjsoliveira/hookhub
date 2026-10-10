@@ -40,9 +40,12 @@ Filters live in the URL (`/?event=PreToolUse&event=Stop&q=format&sort=name`), so
      "events": ["PreToolUse"],
      "install": "plugin",
      "tags": ["git"],
-     "addedAt": "2026-10-10"
+     "addedAt": "2026-10-10",
+     "verifiedAt": "2026-10-10"
    }
    ```
+
+   `verifiedAt` is the day you checked `events` against the repo's real hook config. The site shows it, because repos change.
 
    `install` is `plugin` (ships a `hooks/hooks.json`), `settings` (copy entries into `settings.json`) or `script` (installed by a script or package).
 3. Run `npm run refresh:github && npm test && npm run build`.

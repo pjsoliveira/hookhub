@@ -27,7 +27,8 @@ A static catalog site. All data is JSON in `data/`, validated at build time by `
 
 - **Never guess a hook's events.** Read the repo's README and its hook config (`hooks/hooks.json` or `.claude/settings.json`) first. The seed entries were verified that way.
 - `data/events.json` must match the official docs (https://code.claude.com/docs/en/hooks). Event names are case-sensitive.
-- `data/github-meta.json` is generated; never edit it by hand.
+- Set `verifiedAt` to the day you actually checked the events. Re-check an entry (and bump the date) when its repo changes.
+- `data/github-meta.json` is generated; never edit it by hand. The build fails if a hook has no entry there, or an entry has no hook (`checkMeta`).
 - Names and descriptions render as plain text. Don't switch them to HTML or markdown.
 
 ## Gotchas

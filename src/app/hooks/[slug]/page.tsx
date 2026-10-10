@@ -53,12 +53,18 @@ export default async function HookPage({ params }: PageProps<"/hooks/[slug]">) {
           <p className="text-sm text-zinc-500">
             ★ {meta.stars.toLocaleString("en-US")} · {licenseLabel(meta.license)}
             {meta.language ? ` · ${meta.language}` : ""} · Updated {formatMonth(meta.pushedAt)}
+            <br />
+            Stars and license as of {formatMonth(meta.fetchedAt)}.
           </p>
         )}
       </header>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-semibold">Events ({hookEvents.length})</h2>
+        <p className="text-sm text-zinc-500">
+          Checked against the repository&apos;s hook configuration in {formatMonth(hook.verifiedAt)}. Repositories
+          change, so check the README for the current list.
+        </p>
         <ul className="flex flex-col gap-2">
           {hookEvents.map((event) => (
             <li key={event.name} className="rounded-md border border-zinc-200 p-3 dark:border-zinc-800">

@@ -14,7 +14,8 @@
       "prompts",
       "context"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "hooks-mastery",
@@ -41,7 +42,8 @@
       "examples",
       "learning"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "multi-agent-observability",
@@ -67,7 +69,8 @@
       "observability",
       "monitoring"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "hooks-voice-demo",
@@ -111,7 +114,8 @@
       "voice",
       "reference"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "add-reasoning-to-prs",
@@ -126,7 +130,8 @@
       "git",
       "pull-requests"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "encoding-guard",
@@ -145,7 +150,8 @@
       "files",
       "encoding"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "vision-hook",
@@ -161,7 +167,8 @@
       "images",
       "vision"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "awake-speak",
@@ -176,7 +183,8 @@
       "voice",
       "tts"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   },
   {
     "slug": "memory-compiler",
@@ -193,6 +201,7 @@
       "memory",
       "knowledge-base"
     ],
-    "addedAt": "2026-10-10"
+    "addedAt": "2026-10-10",
+    "verifiedAt": "2026-10-10"
   }
 ]

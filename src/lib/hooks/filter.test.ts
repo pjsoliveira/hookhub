@@ -18,6 +18,7 @@ const make = (slug: string, events: string[], extra: Partial<Hook> = {}): Hook =
   events,
   install: "plugin",
   addedAt: "2026-10-01",
+  verifiedAt: "2026-10-01",
   ...extra,
 });
 
