@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Hero } from "@/components/hero/Hero";
+import { HeroBold } from "@/components/hero/HeroBold";
 import { HookBrowser } from "@/components/HookBrowser";
 import { events, githubMeta, hooks } from "@/lib/hooks/load";
 
@@ -8,7 +8,7 @@ import { events, githubMeta, hooks } from "@/lib/hooks/load";
 export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
-      <Hero />
+      <HeroBold />
       <Suspense fallback={<p className="text-zinc-500">Loading hooks…</p>}>
         <HookBrowser hooks={hooks} events={events} meta={githubMeta} />
       </Suspense>
