@@ -85,3 +85,24 @@ h3,
 h4 {
   font-family: var(--font-heading);
 }
+
+/*
+ * Entrance animation: `motion-safe:animate-fade-up` fades an element in while it rises a little.
+ * `backwards` (not `both`) so the element goes back to its normal styles afterwards; otherwise the
+ * finished animation would keep overriding the card's hover lift. Stagger with an inline
+ * `animationDelay`. Always use it with `motion-safe:` so reduced-motion users see nothing move.
+ */
+@theme {
+  --animate-fade-up: fade-up 0.5s ease-out backwards;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
