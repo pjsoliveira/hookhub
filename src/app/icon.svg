@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="HookHub">
+  <!-- Original HookHub mark, in the brand palette: Dark #141413, Orange #d97757, Light #faf9f5. -->
+  <rect width="64" height="64" rx="14" fill="#141413"/>
+  <path d="M40 13 V37 C40 46 34.5 51 28 51 C21.5 51 16.5 46.5 16.5 40.5 V36" fill="none" stroke="#d97757" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="40" cy="13" r="3.5" fill="#faf9f5"/>
+</svg>
