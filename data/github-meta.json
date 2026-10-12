@@ -1,11 +1,11 @@
 {
   "severity1/claude-code-prompt-improver": {
-    "stars": 1946,
+    "stars": 1949,
     "license": "MIT",
     "language": "Python",
     "pushedAt": "2026-10-01T04:27:45.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-11T11:44:21.428Z"
+    "fetchedAt": "2026-10-12T06:20:39.023Z"
   },
   "disler/claude-code-hooks-mastery": {
     "stars": 3938,
