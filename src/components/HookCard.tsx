@@ -3,6 +3,8 @@ import { licenseLabel, repoUrl } from "@/lib/hooks/format";
 import type { GithubMeta, Hook } from "@/lib/hooks/schema";
 
 const MAX_EVENT_BADGES = 4;
+const MAX_STAGGER_STEPS = 8;
+const STAGGER_MS = 60;
 
 // Fixed locale and time zone, so server and browser always print the same text.
 export function formatMonth(iso: string) {
@@ -46,16 +48,21 @@ export function HookCard({
   hook,
   meta,
   groupOf,
+  index = 0,
 }: {
   hook: Hook;
   meta?: GithubMeta;
   groupOf: Record<string, string>;
+  // Position in the list: staggers the entrance animation (capped, so long lists don't wait).
+  index?: number;
 }) {
   const shown = hook.events.slice(0, MAX_EVENT_BADGES);
   const hidden = hook.events.length - shown.length;
 
   return (
-    <article className="flex flex-col gap-4 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition duration-150 hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-600">
+    <article
+      style={{ animationDelay: `${Math.min(index, MAX_STAGGER_STEPS) * STAGGER_MS}ms` }}
+      className="flex flex-col gap-4 motion-safe:animate-fade-up rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition duration-150 hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-600">
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2 text-xs">
           <span className="font-medium uppercase tracking-wide text-zinc-500">{INSTALL_LABELS[hook.install]}</span>

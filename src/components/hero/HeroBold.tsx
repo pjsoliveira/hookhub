@@ -21,16 +21,16 @@ export function HeroBold() {
         className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-emerald-400/20 blur-3xl motion-safe:animate-pulse"
       />
       <div className="relative flex flex-col gap-5">
-        <p className="font-mono text-sm font-medium text-emerald-400">
+        <p style={{ animationDelay: "0ms" }} className="font-mono text-sm font-medium text-emerald-400 motion-safe:animate-fade-up">
           <span aria-hidden="true">$ </span>claude hooks list
           <span aria-hidden="true" className="ml-1 inline-block h-4 w-2 translate-y-0.5 bg-emerald-400 motion-safe:animate-pulse" />
         </p>
-        <h1 className="text-6xl font-black leading-none tracking-tighter sm:text-8xl">HookHub</h1>
-        <p className="max-w-2xl text-lg leading-relaxed text-zinc-300">
+        <h1 style={{ animationDelay: "100ms" }} className="text-6xl font-black leading-none tracking-tighter motion-safe:animate-fade-up sm:text-8xl">HookHub</h1>
+        <p style={{ animationDelay: "200ms" }} className="max-w-2xl text-lg leading-relaxed text-zinc-300 motion-safe:animate-fade-up">
           Community hooks for Claude Code, filterable by the event they react to. Every card links to the hook&apos;s
           GitHub repository.
         </p>
-        <dl className="mt-3 flex flex-wrap gap-x-12 gap-y-6 border-t border-zinc-800 pt-6">
+        <dl style={{ animationDelay: "300ms" }} className="mt-3 flex flex-wrap gap-x-12 gap-y-6 border-t border-zinc-800 pt-6 motion-safe:animate-fade-up">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col-reverse gap-1">
               <dt className="font-mono text-xs font-semibold uppercase tracking-widest text-zinc-400">{stat.label}</dt>

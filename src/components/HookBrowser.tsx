@@ -136,7 +136,7 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
                   aria-pressed={on}
                   title={event.description}
                   onClick={() => toggle(event.name)}
-                  className={`rounded-full border px-3 py-1.5 text-sm transition-colors sm:py-1 ${
+                  className={`rounded-full border px-3 py-1.5 text-sm transition motion-safe:active:scale-95 sm:py-1 ${
                     on
                       ? "border-black bg-black text-white dark:border-white dark:bg-white dark:text-black"
                       : "border-zinc-300 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
@@ -178,8 +178,8 @@ export function HookBrowser({ hooks, events, meta }: { hooks: Hook[]; events: Ho
         </p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((hook) => (
-            <HookCard key={hook.slug} hook={hook} meta={meta[hook.repo]} groupOf={groupOf} />
+          {visible.map((hook, index) => (
+            <HookCard key={hook.slug} hook={hook} meta={meta[hook.repo]} groupOf={groupOf} index={index} />
           ))}
         </div>
       )}
