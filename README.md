@@ -116,3 +116,7 @@ Built with Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tail
 - Names and descriptions are rendered as plain text, never HTML, so a catalog entry can't inject markup.
 - Links go only to `github.com/{owner}/{name}`; the schema rejects anything else.
 - Hooks run commands with your permissions. The detail pages tell people to read a hook's code before installing it, and so should you.
+
+## License
+
+[MIT](LICENSE). The hooks listed in the catalog belong to their own authors and have their own licenses; HookHub only links to them.
