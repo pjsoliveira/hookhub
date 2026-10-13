@@ -5,6 +5,11 @@ import type { Hook } from "./hooks/schema";
 // can be tested. Nothing here may be non-deterministic (no `new Date()`): with
 // Cache Components, that fails the prerender. Dates come from the catalog.
 
+/** Path of a hook's page. Shared by the sitemap and the canonical tag so they can't drift apart. */
+export function hookPath(slug: string): string {
+  return `/hooks/${slug}`;
+}
+
 /** One URL for the home page and one per hook, in a stable order. */
 export function buildSitemap(hooks: Hook[], siteUrl: string): MetadataRoute.Sitemap {
   // ISO dates (YYYY-MM-DD) sort correctly as plain strings.
@@ -15,7 +20,7 @@ export function buildSitemap(hooks: Hook[], siteUrl: string): MetadataRoute.Site
 
   const hookPages = [...hooks]
     .sort((a, b) => a.slug.localeCompare(b.slug))
-    .map((hook) => ({ url: `${siteUrl}/hooks/${hook.slug}`, lastModified: hook.verifiedAt }));
+    .map((hook) => ({ url: `${siteUrl}${hookPath(hook.slug)}`, lastModified: hook.verifiedAt }));
 
   return [{ url: `${siteUrl}/`, ...(newest ? { lastModified: newest } : {}) }, ...hookPages];
 }

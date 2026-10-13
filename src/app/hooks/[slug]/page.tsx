@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Badge, formatMonth } from "@/components/HookCard";
 import { licenseLabel } from "@/lib/hooks/format";
 import { events, getHook, githubMeta, hooks, repoUrl } from "@/lib/hooks/load";
+import { hookPath } from "@/lib/seo";
 
 export function generateStaticParams() {
   return hooks.map((hook) => ({ slug: hook.slug }));
@@ -11,7 +12,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/hooks/[slug]">): Promise<Metadata> {
   const hook = getHook((await params).slug);
-  return hook ? { title: hook.name, description: hook.description } : {};
+  return hook
+    ? { title: hook.name, description: hook.description, alternates: { canonical: hookPath(hook.slug) } }
+    : {};
 }
 
 const INSTALL_NOTES = {

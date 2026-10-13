@@ -1,7 +1,11 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { HeroOrbit } from "@/components/hero/HeroOrbit";
 import { HookBrowser } from "@/components/HookBrowser";
 import { events, githubMeta, hooks } from "@/lib/hooks/load";
+
+// Filters like ?event=Stop show the same page, so they all point at the plain home page.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 // The filters live in the URL (useSearchParams), so the browser sits inside
 // <Suspense>; the page itself is a static shell.

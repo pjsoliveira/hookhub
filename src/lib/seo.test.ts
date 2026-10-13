@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildRobots, buildSitemap } from "./seo";
+import { buildRobots, buildSitemap, hookPath } from "./seo";
 import type { Hook } from "./hooks/schema";
 
 const SITE = "https://example.test";
@@ -58,6 +58,17 @@ describe("buildSitemap", () => {
     for (const entry of buildSitemap([hook("a")], SITE)) {
       expect(Number.isNaN(Date.parse(String(entry.lastModified)))).toBe(false);
     }
+  });
+});
+
+describe("hookPath", () => {
+  it("is the path of a hook's page", () => {
+    expect(hookPath("prompt-improver")).toBe("/hooks/prompt-improver");
+  });
+
+  it("matches the sitemap URL, so the canonical tag and the sitemap always agree", () => {
+    const urls = buildSitemap([hook("a-hook")], SITE).map((entry) => entry.url);
+    expect(urls).toContain(`${SITE}${hookPath("a-hook")}`);
   });
 });
 
