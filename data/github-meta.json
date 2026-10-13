@@ -1,35 +1,35 @@
 {
   "severity1/claude-code-prompt-improver": {
-    "stars": 1949,
+    "stars": 1950,
     "license": "MIT",
     "language": "Python",
     "pushedAt": "2026-10-01T04:27:45.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-12T06:20:39.023Z"
+    "fetchedAt": "2026-10-13T07:21:26.081Z"
   },
   "disler/claude-code-hooks-mastery": {
-    "stars": 3938,
+    "stars": 3939,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-03-04T18:16:25.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-11T11:44:21.640Z"
+    "fetchedAt": "2026-10-13T07:21:26.390Z"
   },
   "disler/claude-code-hooks-multi-agent-observability": {
-    "stars": 1545,
+    "stars": 1546,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-02-08T23:59:13.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-10T07:30:59.644Z"
+    "fetchedAt": "2026-10-13T07:21:26.680Z"
   },
   "shanraisshan/claude-code-hooks": {
-    "stars": 555,
+    "stars": 556,
     "license": "MIT",
     "language": "HTML",
     "pushedAt": "2026-06-04T18:35:14.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-11T11:44:22.061Z"
+    "fetchedAt": "2026-10-13T07:21:26.993Z"
   },
   "backthread/add-reasoning-to-prs": {
     "stars": 35,
