@@ -102,7 +102,7 @@ This repo ships a skill and an agent that do steps 1–3 for you. In Claude Code
 data/               hooks.json, events.json, github-meta.json
 scripts/            refresh-github.mjs and its helpers
 src/
-  app/              pages: the home page and /hooks/[slug]
+  app/              pages: the home page and /hooks/[slug], plus robots.ts and sitemap.ts
   components/       HookBrowser (filters), HookCard, hero variants
   lib/hooks/        schema, loading, filter/sort/URL logic (pure functions, tested)
 .github/workflows/  CI and the weekly metadata refresh
@@ -115,6 +115,7 @@ Built with Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tail
 
 - Names and descriptions are rendered as plain text, never HTML, so a catalog entry can't inject markup.
 - Links go only to `github.com/{owner}/{name}`; the schema rejects anything else.
+- `/robots.txt` and `/sitemap.xml` are generated from the catalog at build time (`src/lib/seo.ts`), so a new hook shows up in the sitemap automatically. Their URLs use `https://hookhub-beta.vercel.app`; when the site gets a custom domain, set the `SITE_URL` environment variable (or change the default in `src/lib/site.ts`).
 - Hooks run commands with your permissions. The detail pages tell people to read a hook's code before installing it, and so should you.
 
 ## License
