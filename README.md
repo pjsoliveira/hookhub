@@ -115,7 +115,7 @@ Built with Next.js 16 (App Router, Cache Components), React 19, TypeScript, Tail
 
 - Names and descriptions are rendered as plain text, never HTML, so a catalog entry can't inject markup.
 - Links go only to `github.com/{owner}/{name}`; the schema rejects anything else.
-- `/robots.txt` and `/sitemap.xml` are generated from the catalog at build time (`src/lib/seo.ts`), so a new hook shows up in the sitemap automatically. Their URLs use `https://hookhub-beta.vercel.app`; when the site gets a custom domain, set the `SITE_URL` environment variable (or change the default in `src/lib/site.ts`).
+- `/robots.txt` and `/sitemap.xml` are generated from the catalog at build time (`src/lib/seo.ts`), so a new hook shows up in the sitemap automatically. Every page also has a canonical tag, so the site's other addresses (preview and branch URLs) aren't treated as separate pages. The URLs use `https://hookhub-beta.vercel.app`; when the site gets a custom domain, set the `SITE_URL` environment variable (or change the default in `src/lib/site.ts`).
 - Hooks run commands with your permissions. The detail pages tell people to read a hook's code before installing it, and so should you.
 
 ## License
