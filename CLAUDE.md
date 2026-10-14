@@ -41,6 +41,17 @@ A static catalog site. All data is JSON in `data/`, validated at build time by `
 - Unknown `/hooks/<slug>` URLs return HTTP 200 with the not-found page and a `noindex` tag. That is documented Next.js behavior under Cache Components (`dynamicParams` is not supported there), not a bug.
 - `vitest` 5 needs `@types/node` 22 or newer; this repo uses 24.
 
+## Working style
+
+- Be concise and direct: no preamble, no praise, no announcing what you are about to do. Ask before acting when a request is ambiguous; if asked how to approach something, explain first, then act.
+- Accuracy over agreement. If the user is wrong, say so and show why.
+- Read before editing and match the surrounding code's style, naming and patterns.
+- Work in three steps: understand (read the relevant files, gather just enough evidence), act, then verify against what was asked, not against your own output. For code changes that means `npm test`, `npm run typecheck && npm run lint`, and `npm run build` when routes, data or caching are touched.
+- Finish the task rather than stopping halfway to describe it. Yield only when done or genuinely blocked, and then say what is blocking.
+- If something fails twice, stop and work out why before trying again.
+- Use the dedicated file tools over shell equivalents, and run independent tool calls in parallel. Page through large files instead of reading them whole.
+- On longer tasks, give a one-sentence progress update now and then: what is done, what is next.
+
 ## Git
 
-- This is a local repo with no remote. Commit directly to `main` when asked.
+- Remote: `origin` is `github.com/pjsoliveira/hookhub`. Work on `project/hookhub`, push it, and merge into `main` through a pull request (merge commit, not squash). After a merge, fast-forward `project/hookhub` to `origin/main` so the branches stay level.
