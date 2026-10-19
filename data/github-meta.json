@@ -1,43 +1,43 @@
 {
   "severity1/claude-code-prompt-improver": {
-    "stars": 1950,
+    "stars": 1958,
     "license": "MIT",
     "language": "Python",
     "pushedAt": "2026-10-01T04:27:45.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-13T07:21:26.081Z"
+    "fetchedAt": "2026-10-19T06:15:59.691Z"
   },
   "disler/claude-code-hooks-mastery": {
-    "stars": 3939,
+    "stars": 3944,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-03-04T18:16:25.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-13T07:21:26.390Z"
+    "fetchedAt": "2026-10-19T06:15:59.965Z"
   },
   "disler/claude-code-hooks-multi-agent-observability": {
-    "stars": 1546,
+    "stars": 1548,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-02-08T23:59:13.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-13T07:21:26.680Z"
+    "fetchedAt": "2026-10-19T06:16:00.223Z"
   },
   "shanraisshan/claude-code-hooks": {
-    "stars": 556,
+    "stars": 560,
     "license": "MIT",
     "language": "HTML",
     "pushedAt": "2026-06-04T18:35:14.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-13T07:21:26.993Z"
+    "fetchedAt": "2026-10-19T06:16:00.444Z"
   },
   "backthread/add-reasoning-to-prs": {
     "stars": 35,
     "license": "MIT",
     "language": "TypeScript",
-    "pushedAt": "2026-10-08T01:33:59.000Z",
+    "pushedAt": "2026-10-15T01:34:07.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-10T07:31:00.258Z"
+    "fetchedAt": "2026-10-19T06:16:00.708Z"
   },
   "ymonster/claude_encoding_guard": {
     "stars": 16,
@@ -64,11 +64,11 @@
     "fetchedAt": "2026-10-10T07:31:01.146Z"
   },
   "coleam00/claude-memory-compiler": {
-    "stars": 1299,
+    "stars": 1304,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-04-06T19:46:57.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-10T07:31:01.482Z"
+    "fetchedAt": "2026-10-19T06:16:01.727Z"
   }
 }
