@@ -1,27 +1,27 @@
 {
   "severity1/claude-code-prompt-improver": {
-    "stars": 1964,
+    "stars": 1965,
     "license": "MIT",
     "language": "Python",
     "pushedAt": "2026-10-01T04:27:45.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-26T06:16:05.150Z"
+    "fetchedAt": "2026-11-02T06:12:14.379Z"
   },
   "disler/claude-code-hooks-mastery": {
-    "stars": 3960,
+    "stars": 3970,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-03-04T18:16:25.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-26T06:16:05.344Z"
+    "fetchedAt": "2026-11-02T06:12:14.749Z"
   },
   "disler/claude-code-hooks-multi-agent-observability": {
-    "stars": 1554,
+    "stars": 1564,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-02-08T23:59:13.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-26T06:16:05.636Z"
+    "fetchedAt": "2026-11-02T06:12:15.005Z"
   },
   "shanraisshan/claude-code-hooks": {
     "stars": 563,
@@ -29,7 +29,7 @@
     "language": "HTML",
     "pushedAt": "2026-06-04T18:35:14.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-26T06:16:05.863Z"
+    "fetchedAt": "2026-11-02T06:12:15.327Z"
   },
   "backthread/add-reasoning-to-prs": {
     "stars": 35,
@@ -37,7 +37,7 @@
     "language": "TypeScript",
     "pushedAt": "2026-10-15T01:34:07.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-19T06:16:00.708Z"
+    "fetchedAt": "2026-11-02T06:12:15.615Z"
   },
   "ymonster/claude_encoding_guard": {
     "stars": 16,
@@ -45,7 +45,7 @@
     "language": "Python",
     "pushedAt": "2026-08-03T13:39:45.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-10T07:31:00.563Z"
+    "fetchedAt": "2026-11-02T06:12:15.916Z"
   },
   "RainSunMe/cc-vision-hook": {
     "stars": 11,
@@ -53,7 +53,7 @@
     "language": "TypeScript",
     "pushedAt": "2026-07-09T06:24:53.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-10T07:31:00.873Z"
+    "fetchedAt": "2026-11-02T06:12:16.170Z"
   },
   "angelinekeke/claude-awake-speak": {
     "stars": 5,
@@ -61,14 +61,14 @@
     "language": "Python",
     "pushedAt": "2026-03-24T13:56:06.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-10T07:31:01.146Z"
+    "fetchedAt": "2026-11-02T06:12:16.402Z"
   },
   "coleam00/claude-memory-compiler": {
-    "stars": 1307,
+    "stars": 1314,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-04-06T19:46:57.000Z",
     "archived": false,
-    "fetchedAt": "2026-10-26T06:16:07.083Z"
+    "fetchedAt": "2026-11-02T06:12:16.617Z"
   }
 }
