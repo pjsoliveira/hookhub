@@ -1,35 +1,35 @@
 {
   "severity1/claude-code-prompt-improver": {
-    "stars": 1965,
+    "stars": 1968,
     "license": "MIT",
     "language": "Python",
     "pushedAt": "2026-10-01T04:27:45.000Z",
     "archived": false,
-    "fetchedAt": "2026-11-02T06:12:14.379Z"
+    "fetchedAt": "2026-11-09T14:56:10.459Z"
   },
   "disler/claude-code-hooks-mastery": {
-    "stars": 3970,
+    "stars": 3973,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-03-04T18:16:25.000Z",
     "archived": false,
-    "fetchedAt": "2026-11-02T06:12:14.749Z"
+    "fetchedAt": "2026-11-09T14:56:10.739Z"
   },
   "disler/claude-code-hooks-multi-agent-observability": {
-    "stars": 1564,
+    "stars": 1566,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-02-08T23:59:13.000Z",
     "archived": false,
-    "fetchedAt": "2026-11-02T06:12:15.005Z"
+    "fetchedAt": "2026-11-09T14:56:10.972Z"
   },
   "shanraisshan/claude-code-hooks": {
-    "stars": 563,
+    "stars": 569,
     "license": "MIT",
     "language": "HTML",
     "pushedAt": "2026-06-04T18:35:14.000Z",
     "archived": false,
-    "fetchedAt": "2026-11-02T06:12:15.327Z"
+    "fetchedAt": "2026-11-09T14:56:11.258Z"
   },
   "backthread/add-reasoning-to-prs": {
     "stars": 35,
@@ -64,11 +64,11 @@
     "fetchedAt": "2026-11-02T06:12:16.402Z"
   },
   "coleam00/claude-memory-compiler": {
-    "stars": 1314,
+    "stars": 1321,
     "license": null,
     "language": "Python",
     "pushedAt": "2026-04-06T19:46:57.000Z",
     "archived": false,
-    "fetchedAt": "2026-11-02T06:12:16.617Z"
+    "fetchedAt": "2026-11-09T14:56:12.582Z"
   }
 }
